@@ -47,7 +47,7 @@ public class UI extends JFrame {
     public UI() {
         setContentPane(mainPanel);
         setTitle("Conversor PDF para TXT");
-        setSize(460,260);
+        setSize(460,340);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
@@ -62,9 +62,11 @@ public class UI extends JFrame {
                 chooser.addChoosableFileFilter(restrict);
 
                 int file = chooser.showOpenDialog(null);
+                String filepath = chooser.getSelectedFile().getAbsolutePath();
 
                 if (file == JFileChooser.APPROVE_OPTION) {
-                    chosenFile.setText(chooser.getSelectedFile().getAbsolutePath());
+                    chosenFile.setText(filepath);
+                    chosenFile.setSize(308, 150);
                     fileNameNoExtension = FilenameUtils.removeExtension(chooser.getSelectedFile().getName());
                 } else {
                     chosenFile.setText("Tente novamente.");
@@ -129,6 +131,7 @@ public class UI extends JFrame {
 
             ITesseract tesseract = new Tesseract();
             tesseract.setDatapath("src/main/resources/tessdata");
+            tesseract.setLanguage("por");
 
             File txtFile = new File(folder + "\\" + fileNameNoExtension +  ".txt");
             FileWriter writer = new FileWriter(txtFile);
